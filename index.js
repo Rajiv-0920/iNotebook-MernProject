@@ -5,16 +5,11 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import path from "path";
 
-// components
-import createUserRoute from "./routes/create-user.js";
-import loginUserRoute from "./routes/login.js";
-import fetchAllNotesRoute from "./routes/fetch-all-notes.js";
-import addNoteRoute from "./routes/add-note.js";
-import updateNoteRoute from "./routes/update-note.js";
-import deleteNoteRoute from "./routes/delete-note.js";
-import updateUserRoute from "./routes/update-user.js";
-
 import Connection from "./db.js";
+
+// Import Routes
+import notesRoute from "./routes/notesRoute.js";
+import authRoute from "./routes/authRoute.js";
 
 const __dirname = path.resolve();
 
@@ -32,13 +27,8 @@ app.use(express.json()); //for using req.body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/", createUserRoute);
-app.use("/", loginUserRoute);
-app.use("/", fetchAllNotesRoute);
-app.use("/", addNoteRoute);
-app.use("/", updateNoteRoute);
-app.use("/", deleteNoteRoute);
-app.use("/", updateUserRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/notes", notesRoute);
 
 // For deployment : To run React after deployment
 if (process.env.NODE_ENV === "production") {
